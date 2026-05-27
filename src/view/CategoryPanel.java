@@ -14,7 +14,7 @@ public class CategoryPanel extends JPanel {
     private TaskController controller;
     private JTable table;
     private DefaultTableModel tableModel;
-    private JTextField txtName, txtDesc, txtColor;
+    private JTextField txtName, txtDesc;
     private JButton btnSave;
     private Category editingCat;
 
@@ -28,7 +28,7 @@ public class CategoryPanel extends JPanel {
     }
 
     private void initComponents() {
-        JLabel title = new JLabel("🏷️ Manajemen Kategori");
+        JLabel title = new JLabel("️ Manajemen Kategori");
         title.setFont(UITheme.FONT_TITLE);
         title.setForeground(UITheme.TEXT_DARK);
         add(title, BorderLayout.NORTH);
@@ -54,10 +54,8 @@ public class CategoryPanel extends JPanel {
 
         txtName = createField("Nama Kategori *");
         txtDesc = createField("Deskripsi");
-        txtColor = createField("Warna (hex, contoh: #3498db)");
-        txtColor.setText("#3498db");
 
-        btnSave = new JButton("💾 Simpan Kategori");
+        btnSave = new JButton(" Simpan Kategori");
         btnSave.setFont(UITheme.FONT_BOLD);
         btnSave.setBackground(UITheme.SUCCESS);
         btnSave.setForeground(Color.WHITE);
@@ -85,10 +83,6 @@ public class CategoryPanel extends JPanel {
         formPanel.add(makeLabel("Deskripsi"));
         formPanel.add(Box.createVerticalStrut(4));
         formPanel.add(txtDesc);
-        formPanel.add(Box.createVerticalStrut(10));
-        formPanel.add(makeLabel("Warna (hex)"));
-        formPanel.add(Box.createVerticalStrut(4));
-        formPanel.add(txtColor);
         formPanel.add(Box.createVerticalStrut(20));
         formPanel.add(btnSave);
         formPanel.add(Box.createVerticalStrut(8));
@@ -117,15 +111,13 @@ public class CategoryPanel extends JPanel {
         tableHeader.add(btnDelete, BorderLayout.EAST);
         tablePanel.add(tableHeader, BorderLayout.NORTH);
 
-        tableModel = new DefaultTableModel(new String[]{"ID", "Nama", "Deskripsi", "Warna"}, 0) {
+        tableModel = new DefaultTableModel(new String[]{"ID", "Nama", "Deskripsi"}, 0) {
             @Override public boolean isCellEditable(int r, int c) { return false; }
         };
         table = new JTable(tableModel);
         table.setFont(UITheme.FONT_BODY);
         table.setRowHeight(30);
-        table.getTableHeader().setFont(UITheme.FONT_BOLD);
-        table.getTableHeader().setBackground(UITheme.PRIMARY);
-        table.getTableHeader().setForeground(Color.WHITE);
+        UITheme.styleTableHeader(table);
         table.getColumnModel().getColumn(0).setMaxWidth(0);
         table.getColumnModel().getColumn(0).setMinWidth(0);
 
@@ -165,7 +157,7 @@ public class CategoryPanel extends JPanel {
     private void refresh() {
         tableModel.setRowCount(0);
         for (Category c : controller.getAllCategories()) {
-            tableModel.addRow(new Object[]{c.getId(), c.getName(), c.getDescription(), c.getColor()});
+            tableModel.addRow(new Object[]{c.getId(), c.getName(), c.getDescription()});
         }
     }
 
@@ -173,7 +165,6 @@ public class CategoryPanel extends JPanel {
         editingCat = null;
         txtName.setText("");
         txtDesc.setText("");
-        txtColor.setText("#3498db");
         btnSave.setText("💾 Simpan Kategori");
     }
 
@@ -187,8 +178,7 @@ public class CategoryPanel extends JPanel {
                 editingCat = c;
                 txtName.setText(c.getName());
                 txtDesc.setText(c.getDescription() != null ? c.getDescription() : "");
-                txtColor.setText(c.getColor() != null ? c.getColor() : "#3498db");
-                btnSave.setText("✏️ Update Kategori");
+                btnSave.setText("️ Update Kategori");
                 break;
             }
         }
@@ -203,7 +193,6 @@ public class CategoryPanel extends JPanel {
         Category cat = editingCat != null ? editingCat : new Category();
         cat.setName(name);
         cat.setDescription(txtDesc.getText().trim());
-        cat.setColor(txtColor.getText().trim());
 
         boolean success = editingCat != null ? controller.updateCategory(cat) : controller.createCategory(cat);
         if (success) {
