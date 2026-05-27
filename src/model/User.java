@@ -10,19 +10,16 @@ public class User extends BaseModel {
     private String password;
     private String fullName;
     private String email;
-    private String role;
 
     public User() { super(); }
 
-    public User(int id, String username, String fullName, String email, String role) {
+    public User(int id, String username, String fullName, String email) {
         super(id);
         this.username = username;
         this.fullName = fullName;
         this.email = email;
-        this.role = role;
     }
 
-    // ABSTRAKSI: implementasi abstract methods dari BaseModel
     @Override
     public String getDisplayName() {
         return fullName + " (" + username + ")";
@@ -30,12 +27,11 @@ public class User extends BaseModel {
 
     @Override
     public boolean isValid() {
-        return username != null && !username.isEmpty()
-            && password != null && !password.isEmpty()
-            && fullName != null && !fullName.isEmpty();
+        return username != null && !username.trim().isEmpty()
+            && password != null && !password.trim().isEmpty()
+            && fullName != null && !fullName.trim().isEmpty();
     }
 
-    // Getters & Setters (ENKAPSULASI)
     public String getUsername() { return username; }
     public void setUsername(String username) { this.username = username; }
 
@@ -48,14 +44,6 @@ public class User extends BaseModel {
     public String getEmail() { return email; }
     public void setEmail(String email) { this.email = email; }
 
-    public String getRole() { return role; }
-    public void setRole(String role) { this.role = role; }
-
-    public boolean isAdmin() { return "admin".equalsIgnoreCase(role); }
-
-    // POLYMORPHISM: override toString
     @Override
-    public String toString() {
-        return fullName;
-    }
+    public String toString() { return fullName; }
 }
