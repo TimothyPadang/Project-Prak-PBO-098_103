@@ -7,22 +7,18 @@ import javax.swing.table.*;
 import java.awt.*;
 import java.util.List;
 
-/**
- * TaskListPanel - Panel Daftar Tugas dengan tabel, search, filter
- * Implements: READ, UPDATE status, DELETE dari CRUD
- */
+
 public class TaskListPanel extends JPanel {
     private TaskController controller;
     private MainFrame mainFrame;
 
     private JTable table;
     private DefaultTableModel tableModel;
-    private JTextField txtSearch;
     private JComboBox<String> cmbFilter;
     private JLabel lblCount;
 
     private static final String[] COLUMNS = {
-        "ID", "Judul Tugas", "Kategori", "Prioritas", "Status", "Deadline", "Diberikan ke", "Sisa Waktu"
+        "ID", "Judul Tugas", "Kategori", "Prioritas", "Status", "Deadline", "Sisa Waktu"
     };
 
     public TaskListPanel(TaskController controller, MainFrame mainFrame) {
@@ -52,20 +48,9 @@ public class TaskListPanel extends JPanel {
         titlePanel.add(lblCount);
         header.add(titlePanel, BorderLayout.NORTH);
 
-        // Toolbar: search + filter
+        // Toolbar: filter status (fitur cari dihapus)
         JPanel toolbar = new JPanel(new FlowLayout(FlowLayout.LEFT, 10, 5));
         toolbar.setOpaque(false);
-
-        txtSearch = new JTextField(18);
-        txtSearch.setFont(UITheme.FONT_BODY);
-        txtSearch.putClientProperty("JTextField.placeholderText", "Cari tugas...");
-        txtSearch.setBorder(BorderFactory.createCompoundBorder(
-            BorderFactory.createLineBorder(UITheme.LIGHT), BorderFactory.createEmptyBorder(5,10,5,10)));
-
-        JButton btnSearch = new JButton("🔍 Cari");
-        styleButton(btnSearch, UITheme.SECONDARY);
-        btnSearch.addActionListener(e -> doSearch());
-        txtSearch.addActionListener(e -> doSearch());
 
         cmbFilter = new JComboBox<>(new String[]{"Semua Status", "Pending", "In Progress", "Completed", "Overdue"});
         cmbFilter.setFont(UITheme.FONT_BODY);
@@ -73,12 +58,9 @@ public class TaskListPanel extends JPanel {
 
         JButton btnReset = new JButton("↺ Reset");
         styleButton(btnReset, UITheme.TEXT_MUTED);
-        btnReset.addActionListener(e -> { txtSearch.setText(""); cmbFilter.setSelectedIndex(0); refresh(); });
+        btnReset.addActionListener(e -> { cmbFilter.setSelectedIndex(0); refresh(); });
 
-        toolbar.add(new JLabel("Cari:"));
-        toolbar.add(txtSearch);
-        toolbar.add(btnSearch);
-        toolbar.add(new JLabel("  Filter:"));
+        toolbar.add(new JLabel("Filter:"));
         toolbar.add(cmbFilter);
         toolbar.add(btnReset);
         header.add(toolbar, BorderLayout.CENTER);
@@ -128,10 +110,7 @@ public class TaskListPanel extends JPanel {
         table.setSelectionBackground(new Color(52, 152, 219, 80));
         table.setGridColor(UITheme.LIGHT);
         table.setShowVerticalLines(false);
-        table.getTableHeader().setFont(UITheme.FONT_BOLD);
-        table.getTableHeader().setBackground(UITheme.PRIMARY);
-        table.getTableHeader().setForeground(Color.WHITE);
-        table.getTableHeader().setPreferredSize(new Dimension(0, 35));
+        UITheme.styleTableHeader(table);
 
         // Sembunyikan kolom ID
         table.getColumnModel().getColumn(0).setMinWidth(0);
@@ -139,7 +118,7 @@ public class TaskListPanel extends JPanel {
         table.getColumnModel().getColumn(0).setWidth(0);
 
         // Lebar kolom
-        int[] widths = {0, 220, 100, 80, 90, 130, 130, 120};
+        int[] widths = {0, 260, 120, 90, 100, 150, 130};
         for (int i = 0; i < widths.length; i++) {
             if (widths[i] > 0) table.getColumnModel().getColumn(i).setPreferredWidth(widths[i]);
         }
@@ -195,12 +174,6 @@ public class TaskListPanel extends JPanel {
         loadData(tasks);
     }
 
-    private void doSearch() {
-        String keyword = txtSearch.getText().trim();
-        if (keyword.isEmpty()) { refresh(); return; }
-        loadData(controller.searchTasks(keyword));
-    }
-
     private void doFilter() {
         String selected = (String) cmbFilter.getSelectedItem();
         if ("Semua Status".equals(selected)) { refresh(); return; }
@@ -217,7 +190,6 @@ public class TaskListPanel extends JPanel {
                 t.getPriority(),
                 t.getStatus(),
                 t.getFormattedDeadline(),
-                t.getAssignedToName() != null ? t.getAssignedToName() : "-",
                 t.getDeadlineStatus()
             });
         }
