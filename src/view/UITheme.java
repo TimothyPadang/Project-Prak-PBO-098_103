@@ -1,11 +1,10 @@
 package view;
 
 import java.awt.*;
+import javax.swing.*;
+import javax.swing.table.*;
 
-/**
- * UITheme - Konfigurasi tampilan UI
- * Enkapsulasi konstanta warna dan font
- */
+
 public class UITheme {
     // Warna utama
     public static final Color PRIMARY       = new Color(52, 73, 94);    // Dark Blue-Gray
@@ -35,6 +34,33 @@ public class UITheme {
     public static final Font FONT_SMALL     = new Font("Segoe UI", Font.PLAIN, 11);
     public static final Font FONT_BOLD      = new Font("Segoe UI", Font.BOLD, 13);
     public static final Font FONT_SIDEBAR   = new Font("Segoe UI", Font.BOLD, 13);
+
+
+    // Helper: styling header tabel agar teks selalu jelas terlihat
+    public static void styleTableHeader(JTable table) {
+        JTableHeader header = table.getTableHeader();
+        header.setFont(new Font("Segoe UI", Font.BOLD, 13));
+        header.setBackground(PRIMARY);
+        header.setForeground(Color.WHITE);
+        header.setOpaque(true);
+        header.setPreferredSize(new Dimension(0, 36));
+        header.setDefaultRenderer(new DefaultTableCellRenderer() {
+            @Override
+            public Component getTableCellRendererComponent(JTable tbl, Object value,
+                    boolean isSelected, boolean hasFocus, int row, int column) {
+                JLabel label = (JLabel) super.getTableCellRendererComponent(tbl, value, isSelected, hasFocus, row, column);
+                label.setBackground(PRIMARY);
+                label.setForeground(Color.WHITE);
+                label.setFont(new Font("Segoe UI", Font.BOLD, 13));
+                label.setHorizontalAlignment(SwingConstants.CENTER);
+                label.setBorder(BorderFactory.createCompoundBorder(
+                    BorderFactory.createMatteBorder(0, 0, 1, 1, LIGHT),
+                    BorderFactory.createEmptyBorder(8, 8, 8, 8)
+                ));
+                return label;
+            }
+        });
+    }
 
     // Helper: warna berdasar prioritas
     public static Color getPriorityColor(String priority) {
