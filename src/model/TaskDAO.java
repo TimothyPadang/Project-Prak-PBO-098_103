@@ -99,17 +99,17 @@ public class TaskDAO {
         return tasks;
     }
 
-    // READ - search by title
-    public List<Task> search(String keyword) {
+    // READ - by status untuk user yang sedang login
+    public List<Task> findByUserAndStatus(int userId, String status) {
         List<Task> tasks = new ArrayList<>();
-        String sql = SELECT_BASE + "WHERE t.title LIKE ? OR t.description LIKE ? ORDER BY t.deadline ASC";
+        String sql = SELECT_BASE + "WHERE t.assigned_to = ? AND t.status = ? ORDER BY t.deadline ASC";
         try (PreparedStatement ps = conn.prepareStatement(sql)) {
-            ps.setString(1, "%" + keyword + "%");
-            ps.setString(2, "%" + keyword + "%");
+            ps.setInt(1, userId);
+            ps.setString(2, status);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) tasks.add(mapRow(rs));
         } catch (SQLException e) {
-            System.err.println("Error search tasks: " + e.getMessage());
+            System.err.println("Error findByUserAndStatus: " + e.getMessage());
         }
         return tasks;
     }
@@ -126,6 +126,23 @@ public class TaskDAO {
             while (rs.next()) tasks.add(mapRow(rs));
         } catch (SQLException e) {
             System.err.println("Error findUpcomingDeadlines: " + e.getMessage());
+        }
+        return tasks;
+    }
+
+    // READ - tasks mendekati deadline untuk user yang sedang login
+    public List<Task> findUpcomingDeadlinesByUser(int userId, int days) {
+        List<Task> tasks = new ArrayList<>();
+        String sql = SELECT_BASE +
+            "WHERE t.assigned_to = ? AND t.deadline BETWEEN NOW() AND DATE_ADD(NOW(), INTERVAL ? DAY) " +
+            "AND t.status != 'Completed' ORDER BY t.deadline ASC";
+        try (PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, userId);
+            ps.setInt(2, days);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) tasks.add(mapRow(rs));
+        } catch (SQLException e) {
+            System.err.println("Error findUpcomingDeadlinesByUser: " + e.getMessage());
         }
         return tasks;
     }
