@@ -7,7 +7,6 @@ import java.util.List;
 
 /**
  * UserDAO - Data Access Object untuk User
- * Menangani semua operasi CRUD User ke database
  */
 public class UserDAO {
     private Connection conn;
@@ -16,15 +15,13 @@ public class UserDAO {
         this.conn = DatabaseConnection.getInstance().getConnection();
     }
 
-    // CREATE
     public boolean create(User user) {
-        String sql = "INSERT INTO users (username, password, full_name, email, role) VALUES (?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO users (username, password, full_name, email) VALUES (?, ?, ?, ?)";
         try (PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setString(1, user.getUsername());
             ps.setString(2, user.getPassword());
             ps.setString(3, user.getFullName());
             ps.setString(4, user.getEmail());
-            ps.setString(5, user.getRole());
             return ps.executeUpdate() > 0;
         } catch (SQLException e) {
             System.err.println("Error create user: " + e.getMessage());
@@ -32,22 +29,17 @@ public class UserDAO {
         }
     }
 
-    // READ - cari semua user
     public List<User> findAll() {
         List<User> users = new ArrayList<>();
         String sql = "SELECT * FROM users ORDER BY full_name";
-        try (Statement st = conn.createStatement();
-             ResultSet rs = st.executeQuery(sql)) {
-            while (rs.next()) {
-                users.add(mapRow(rs));
-            }
+        try (Statement st = conn.createStatement(); ResultSet rs = st.executeQuery(sql)) {
+            while (rs.next()) users.add(mapRow(rs));
         } catch (SQLException e) {
             System.err.println("Error findAll users: " + e.getMessage());
         }
         return users;
     }
 
-    // READ - cari by id
     public User findById(int id) {
         String sql = "SELECT * FROM users WHERE id = ?";
         try (PreparedStatement ps = conn.prepareStatement(sql)) {
@@ -60,7 +52,18 @@ public class UserDAO {
         return null;
     }
 
-    // READ - login
+    public User findByUsername(String username) {
+        String sql = "SELECT * FROM users WHERE username = ?";
+        try (PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, username);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) return mapRow(rs);
+        } catch (SQLException e) {
+            System.err.println("Error findByUsername: " + e.getMessage());
+        }
+        return null;
+    }
+
     public User login(String username, String password) {
         String sql = "SELECT * FROM users WHERE username = ? AND password = ?";
         try (PreparedStatement ps = conn.prepareStatement(sql)) {
@@ -74,14 +77,12 @@ public class UserDAO {
         return null;
     }
 
-    // UPDATE
     public boolean update(User user) {
-        String sql = "UPDATE users SET full_name=?, email=?, role=? WHERE id=?";
+        String sql = "UPDATE users SET full_name=?, email=? WHERE id=?";
         try (PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setString(1, user.getFullName());
             ps.setString(2, user.getEmail());
-            ps.setString(3, user.getRole());
-            ps.setInt(4, user.getId());
+            ps.setInt(3, user.getId());
             return ps.executeUpdate() > 0;
         } catch (SQLException e) {
             System.err.println("Error update user: " + e.getMessage());
@@ -89,7 +90,6 @@ public class UserDAO {
         }
     }
 
-    // UPDATE password
     public boolean updatePassword(int userId, String newPassword) {
         String sql = "UPDATE users SET password=? WHERE id=?";
         try (PreparedStatement ps = conn.prepareStatement(sql)) {
@@ -102,7 +102,6 @@ public class UserDAO {
         }
     }
 
-    // DELETE
     public boolean delete(int id) {
         String sql = "DELETE FROM users WHERE id = ?";
         try (PreparedStatement ps = conn.prepareStatement(sql)) {
@@ -114,7 +113,6 @@ public class UserDAO {
         }
     }
 
-    // Helper: map ResultSet ke User object
     private User mapRow(ResultSet rs) throws SQLException {
         User user = new User();
         user.setId(rs.getInt("id"));
@@ -122,7 +120,6 @@ public class UserDAO {
         user.setPassword(rs.getString("password"));
         user.setFullName(rs.getString("full_name"));
         user.setEmail(rs.getString("email"));
-        user.setRole(rs.getString("role"));
         user.setCreatedAt(rs.getString("created_at"));
         return user;
     }
