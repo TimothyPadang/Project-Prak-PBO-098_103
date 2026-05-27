@@ -111,7 +111,7 @@ public class MainFrame extends JFrame implements DeadlineMonitorThread.DeadlineL
         userInfo.setLayout(new BoxLayout(userInfo, BoxLayout.Y_AXIS));
         userInfo.setBorder(BorderFactory.createEmptyBorder(10, 15, 10, 15));
 
-        lblUserInfo = new JLabel("👤 " + currentUser.getFullName());
+        lblUserInfo = new JLabel( currentUser.getFullName());
         lblUserInfo.setFont(UITheme.FONT_SMALL);
         lblUserInfo.setForeground(UITheme.LIGHT);
 
@@ -126,8 +126,8 @@ public class MainFrame extends JFrame implements DeadlineMonitorThread.DeadlineL
         sidebar.add(Box.createVerticalStrut(15));
 
         // Nav items
-        String[] labels = {"🏠  Dashboard", "📋  Daftar Tugas", "➕  Tambah Tugas",
-                           "🏷️  Kategori", "👥  Manajemen User"};
+        String[] labels = {"  Dashboard", " Daftar Tugas", "  Tambah Tugas",
+                           "️  Kategori", "  Manajemen User"};
         String[] panels = {"DASHBOARD", "TASKS", "TASK_FORM", "CATEGORIES", "USERS"};
 
         sidebarButtons = new JButton[labels.length];
@@ -159,14 +159,14 @@ public class MainFrame extends JFrame implements DeadlineMonitorThread.DeadlineL
         JPanel notifPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
         notifPanel.setBackground(UITheme.SIDEBAR_BG);
         notifPanel.setMaximumSize(new Dimension(200, 40));
-        lblNotifBadge = new JLabel("🔔 Tidak ada notifikasi");
+        lblNotifBadge = new JLabel(" Tidak ada notifikasi");
         lblNotifBadge.setFont(UITheme.FONT_SMALL);
         lblNotifBadge.setForeground(UITheme.TEXT_MUTED);
         notifPanel.add(lblNotifBadge);
         sidebar.add(notifPanel);
 
         // Logout button
-        JButton btnLogout = createSidebarButton("🚪  Logout");
+        JButton btnLogout = createSidebarButton("  Logout");
         btnLogout.setBackground(new Color(192, 57, 43, 200));
         btnLogout.addActionListener(e -> logout());
         sidebar.add(btnLogout);
@@ -213,7 +213,7 @@ public class MainFrame extends JFrame implements DeadlineMonitorThread.DeadlineL
         lblLeft.setFont(UITheme.FONT_SMALL);
         lblLeft.setForeground(UITheme.LIGHT);
 
-        JLabel lblRight = new JLabel("🔄 Monitoring aktif setiap 30 detik");
+        JLabel lblRight = new JLabel(" Monitoring aktif setiap 30 detik");
         lblRight.setFont(UITheme.FONT_SMALL);
         lblRight.setForeground(UITheme.TEXT_MUTED);
 
@@ -249,7 +249,7 @@ public class MainFrame extends JFrame implements DeadlineMonitorThread.DeadlineL
     @Override
     public void onOverdueDetected(List<Task> overdueTasks) {
         notifCount = overdueTasks.size();
-        lblNotifBadge.setText("🔴 " + notifCount + " task terlambat!");
+        lblNotifBadge.setText( notifCount + " task terlambat!");
         lblNotifBadge.setForeground(UITheme.DANGER);
     }
 
@@ -257,7 +257,7 @@ public class MainFrame extends JFrame implements DeadlineMonitorThread.DeadlineL
     public void onUpcomingDeadline(List<Task> upcomingTasks) {
         // Notifikasi popup untuk deadline dalam 24 jam
         if (!upcomingTasks.isEmpty()) {
-            StringBuilder msg = new StringBuilder("⚠️ Deadline dalam 24 jam:\n\n");
+            StringBuilder msg = new StringBuilder("️ Deadline dalam 24 jam:\n\n");
             for (Task t : upcomingTasks) {
                 msg.append("• ").append(t.getTitle()).append(" - ").append(t.getFormattedDeadline()).append("\n");
             }
