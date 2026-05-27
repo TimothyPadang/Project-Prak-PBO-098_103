@@ -20,7 +20,6 @@ public class TaskFormPanel extends JPanel {
     private JTextField txtTitle;
     private JTextArea txtDescription;
     private JComboBox<Category> cmbCategory;
-    private JComboBox<User> cmbAssignedTo;
     private JComboBox<String> cmbPriority;
     private JComboBox<String> cmbStatus;
     private JSpinner spnDeadline;
@@ -86,16 +85,11 @@ public class TaskFormPanel extends JPanel {
         gbc.gridx = 1; gbc.gridy = 1+1; gbc.gridwidth = 3;
         formContainer.add(descScroll, gbc);
 
-        // --- Row: Kategori & Assigned To ---
+        // --- Row: Kategori ---
         addFormLabel(formContainer, "Kategori", gbc, 3, 0);
         cmbCategory = new JComboBox<>();
         cmbCategory.setFont(UITheme.FONT_BODY);
-        addFormField(formContainer, cmbCategory, gbc, 3, 1, 1);
-
-        addFormLabel(formContainer, "Diberikan ke", gbc, 3, 2);
-        cmbAssignedTo = new JComboBox<>();
-        cmbAssignedTo.setFont(UITheme.FONT_BODY);
-        addFormField(formContainer, cmbAssignedTo, gbc, 3, 3, 1);
+        addFormField(formContainer, cmbCategory, gbc, 3, 1, 3);
 
         // --- Row: Prioritas & Status ---
         addFormLabel(formContainer, "Prioritas *", gbc, 4, 0);
@@ -201,11 +195,6 @@ public class TaskFormPanel extends JPanel {
             cmbCategory.addItem(c);
         }
 
-        // Load users
-        cmbAssignedTo.removeAllItems();
-        for (User u : controller.getAllUsers()) {
-            cmbAssignedTo.addItem(u);
-        }
     }
 
     public void resetForm() {
@@ -247,13 +236,6 @@ public class TaskFormPanel extends JPanel {
             }
         }
 
-        // Set assigned to
-        for (int i = 0; i < cmbAssignedTo.getItemCount(); i++) {
-            if (cmbAssignedTo.getItemAt(i).getId() == task.getAssignedTo()) {
-                cmbAssignedTo.setSelectedIndex(i);
-                break;
-            }
-        }
 
         notesPanel.setVisible(true);
     }
@@ -274,9 +256,7 @@ public class TaskFormPanel extends JPanel {
         Category selCat = (Category) cmbCategory.getSelectedItem();
         if (selCat != null) task.setCategoryId(selCat.getId());
 
-        User selUser = (User) cmbAssignedTo.getSelectedItem();
-        if (selUser != null) task.setAssignedTo(selUser.getId());
-
+        // assigned_to diisi otomatis di TaskController berdasarkan user yang login
         task.setPriority((String) cmbPriority.getSelectedItem());
         task.setStatus((String) cmbStatus.getSelectedItem());
 
