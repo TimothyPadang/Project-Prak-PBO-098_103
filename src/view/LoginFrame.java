@@ -51,7 +51,7 @@ public class LoginFrame extends JFrame {
         lblIcon.setFont(new Font("Segoe UI Emoji", Font.PLAIN, 48));
         lblIcon.setAlignmentX(CENTER_ALIGNMENT);
 
-        JLabel lblTitle = new JLabel("Task Manager");
+        JLabel lblTitle = new JLabel("Manajemen Tugas");
         lblTitle.setFont(UITheme.FONT_TITLE);
         lblTitle.setForeground(UITheme.PRIMARY);
         lblTitle.setAlignmentX(CENTER_ALIGNMENT);
@@ -174,7 +174,7 @@ public class LoginFrame extends JFrame {
                     dispose();
                     new MainFrame(user);
                 } else {
-                    lblStatus.setText("Username atau password salah!");
+                    lblStatus.setText("Username atau password salah bos!");
                     txtPassword.setText("");
                 }
             });
