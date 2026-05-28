@@ -57,7 +57,7 @@ public class Task extends BaseModel {
     // Method bisnis: cek apakah overdue
     public boolean isOverdue() {
         return deadline != null && LocalDateTime.now().isAfter(deadline)
-                && !"Completed".equals(status);
+                && !"Selesai".equals(status);
     }
 
     // Method bisnis: format deadline
@@ -70,7 +70,7 @@ public class Task extends BaseModel {
     // Method bisnis: status keterangan
     public String getDeadlineStatus() {
         long days = getDaysUntilDeadline();
-        if ("Completed".equals(status)) return "Selesai";
+        if ("Selesai".equals(status)) return "Selesai";
         if (isOverdue()) return "Terlambat " + Math.abs(days) + " hari";
         if (days == 0) return "Deadline hari ini!";
         if (days <= 3) return "Segera! " + days + " hari lagi";
