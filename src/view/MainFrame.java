@@ -89,7 +89,7 @@ public class MainFrame extends JFrame implements DeadlineMonitorThread.DeadlineL
         userInfo.setMaximumSize(new Dimension(200, 52));
         userInfo.setLayout(new BoxLayout(userInfo, BoxLayout.Y_AXIS));
         userInfo.setBorder(BorderFactory.createEmptyBorder(10, 15, 10, 15));
-        lblUserInfo = new JLabel("👤 " + currentUser.getFullName());
+        lblUserInfo = new JLabel(currentUser.getFullName());
         lblUserInfo.setFont(UITheme.FONT_SMALL);
         lblUserInfo.setForeground(UITheme.LIGHT);
         userInfo.add(lblUserInfo);
@@ -159,7 +159,7 @@ public class MainFrame extends JFrame implements DeadlineMonitorThread.DeadlineL
         statusBar.setBackground(UITheme.PRIMARY);
         statusBar.setBorder(BorderFactory.createEmptyBorder(4, 15, 4, 15));
         statusBar.setPreferredSize(new Dimension(0, 28));
-        JLabel lblLeft = new JLabel("Task Management System v1.0 | " + currentUser.getFullName());
+        JLabel lblLeft = new JLabel("Sistem Manajemen Tugas " + currentUser.getFullName());
         lblLeft.setFont(UITheme.FONT_SMALL);
         lblLeft.setForeground(UITheme.LIGHT);
         JLabel lblRight = new JLabel("Monitoring aktif setiap 30 detik");
