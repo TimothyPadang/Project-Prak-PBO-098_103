@@ -28,10 +28,6 @@ public class Category extends BaseModel {
     public String getDescription() { return description; }
     public void setDescription(String description) { this.description = description; }
 
-    // Kompatibilitas lama: fitur warna kategori sudah dihapus.
-    public String getColor() { return null; }
-    public void setColor(String color) { /* diabaikan */ }
-
     @Override
     public String toString() { return name; }
 }
