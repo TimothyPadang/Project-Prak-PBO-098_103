@@ -38,7 +38,7 @@ public class TaskListPanel extends JPanel {
 
         JPanel titlePanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 0));
         titlePanel.setOpaque(false);
-        JLabel title = new JLabel("📋 Daftar Tugas");
+        JLabel title = new JLabel("Daftar Tugas");
         title.setFont(UITheme.FONT_TITLE);
         title.setForeground(UITheme.TEXT_DARK);
         lblCount = new JLabel("  (0 tugas)");
@@ -56,7 +56,7 @@ public class TaskListPanel extends JPanel {
         cmbFilter.setFont(UITheme.FONT_BODY);
         cmbFilter.addActionListener(e -> doFilter());
 
-        JButton btnReset = new JButton("↺ Reset");
+        JButton btnReset = new JButton("Reset");
         styleButton(btnReset, UITheme.TEXT_MUTED);
         btnReset.addActionListener(e -> { cmbFilter.setSelectedIndex(0); refresh(); });
 
@@ -69,23 +69,23 @@ public class TaskListPanel extends JPanel {
         JPanel actionBar = new JPanel(new FlowLayout(FlowLayout.RIGHT, 5, 5));
         actionBar.setOpaque(false);
 
-        JButton btnAdd = new JButton("➕ Tambah Tugas");
+        JButton btnAdd = new JButton("Tambah Tugas");
         styleButton(btnAdd, UITheme.SUCCESS);
         btnAdd.addActionListener(e -> { mainFrame.showTaskForm(null); });
 
-        JButton btnEdit = new JButton("✏️ Edit");
+        JButton btnEdit = new JButton("Edit");
         styleButton(btnEdit, UITheme.WARNING);
         btnEdit.addActionListener(e -> doEdit());
 
-        JButton btnDelete = new JButton("🗑️ Hapus");
+        JButton btnDelete = new JButton("Hapus");
         styleButton(btnDelete, UITheme.DANGER);
         btnDelete.addActionListener(e -> doDelete());
 
-        JButton btnMarkDone = new JButton("✅ Tandai Selesai");
+        JButton btnMarkDone = new JButton("Tandai Selesai");
         styleButton(btnMarkDone, UITheme.SUCCESS);
         btnMarkDone.addActionListener(e -> doMarkDone());
 
-        JButton btnRefresh = new JButton("🔄");
+        JButton btnRefresh = new JButton("Refresh");
         styleButton(btnRefresh, UITheme.TEXT_MUTED);
         btnRefresh.addActionListener(e -> refresh());
 
@@ -231,7 +231,7 @@ public class TaskListPanel extends JPanel {
         int id = getSelectedTaskId();
         if (id < 0) return;
         if (controller.updateTaskStatus(id, "Completed")) {
-            JOptionPane.showMessageDialog(this, "✅ Tugas ditandai selesai!");
+            JOptionPane.showMessageDialog(this, "Tugas ditandai selesai!");
             refresh();
         }
     }
