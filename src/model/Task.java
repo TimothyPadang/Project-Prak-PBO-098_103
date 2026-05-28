@@ -24,8 +24,8 @@ public class Task extends BaseModel {
     private String updatedAt;
 
     // Konstanta prioritas dan status (ENKAPSULASI)
-    public static final String[] PRIORITIES = {"Low", "Medium", "High", "Critical"};
-    public static final String[] STATUSES = {"Pending", "In Progress", "Completed", "Overdue"};
+    public static final String[] PRIORITIES = {"EZ", "Sedang", "Susah", "Susah+++"};
+    public static final String[] STATUSES = {"Blm mulai", "Proses", "Selesai", "Overdue"};
 
     public Task() { super(); }
 
