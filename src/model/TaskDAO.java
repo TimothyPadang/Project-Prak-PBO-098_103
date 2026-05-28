@@ -119,7 +119,7 @@ public class TaskDAO {
         List<Task> tasks = new ArrayList<>();
         String sql = SELECT_BASE +
             "WHERE t.deadline BETWEEN NOW() AND DATE_ADD(NOW(), INTERVAL ? DAY) " +
-            "AND t.status != 'Completed' ORDER BY t.deadline ASC";
+            "AND t.status != 'Selesai' ORDER BY t.deadline ASC";
         try (PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setInt(1, days);
             ResultSet rs = ps.executeQuery();
@@ -135,7 +135,7 @@ public class TaskDAO {
         List<Task> tasks = new ArrayList<>();
         String sql = SELECT_BASE +
             "WHERE t.assigned_to = ? AND t.deadline BETWEEN NOW() AND DATE_ADD(NOW(), INTERVAL ? DAY) " +
-            "AND t.status != 'Completed' ORDER BY t.deadline ASC";
+            "AND t.status != 'Selesai' ORDER BY t.deadline ASC";
         try (PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setInt(1, userId);
             ps.setInt(2, days);
@@ -182,7 +182,7 @@ public class TaskDAO {
 
     // UPDATE overdue tasks secara otomatis
     public int updateOverdueTasks() {
-        String sql = "UPDATE tasks SET status='Overdue' WHERE deadline < NOW() AND status NOT IN ('Completed', 'Overdue')";
+        String sql = "UPDATE tasks SET status='Overdue' WHERE deadline < NOW() AND status NOT IN ('Selesai', 'Overdue')";
         try (Statement st = conn.createStatement()) {
             return st.executeUpdate(sql);
         } catch (SQLException e) {
