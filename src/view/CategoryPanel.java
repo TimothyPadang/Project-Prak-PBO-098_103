@@ -100,7 +100,7 @@ public class CategoryPanel extends JPanel {
         tblTitle.setFont(UITheme.FONT_HEADER);
         tblTitle.setForeground(UITheme.TEXT_DARK);
 
-        JButton btnDelete = new JButton("🗑️ Hapus");
+        JButton btnDelete = new JButton("Hapus");
         btnDelete.setFont(UITheme.FONT_SMALL);
         btnDelete.setBackground(UITheme.DANGER);
         btnDelete.setForeground(Color.WHITE);
@@ -165,7 +165,7 @@ public class CategoryPanel extends JPanel {
         editingCat = null;
         txtName.setText("");
         txtDesc.setText("");
-        btnSave.setText("💾 Simpan Kategori");
+        btnSave.setText("Simpan Kategori");
     }
 
     private void loadToForm() {
