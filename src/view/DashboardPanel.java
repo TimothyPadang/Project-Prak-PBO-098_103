@@ -70,7 +70,7 @@ public class DashboardPanel extends JPanel {
         JPanel bottomPanel = new JPanel(new BorderLayout(10, 10));
         bottomPanel.setOpaque(false);
 
-        JLabel upcomingTitle = new JLabel("⏰ Deadline Dalam 3 Hari");
+        JLabel upcomingTitle = new JLabel("Deadline Dalam 3 Hari");
         upcomingTitle.setFont(UITheme.FONT_HEADER);
         upcomingTitle.setForeground(UITheme.TEXT_DARK);
         bottomPanel.add(upcomingTitle, BorderLayout.NORTH);
@@ -155,7 +155,7 @@ public class DashboardPanel extends JPanel {
         List<Task> upcoming = controller.getUpcomingDeadlines(3);
 
         if (upcoming.isEmpty()) {
-            JLabel empty = new JLabel("  ✨ Tidak ada deadline dalam 3 hari ke depan");
+            JLabel empty = new JLabel("  Tidak ada deadline dalam 3 hari ke depan");
             empty.setFont(UITheme.FONT_BODY);
             empty.setForeground(UITheme.TEXT_MUTED);
             empty.setBorder(BorderFactory.createEmptyBorder(15, 15, 15, 15));
@@ -184,7 +184,7 @@ public class DashboardPanel extends JPanel {
         titleLbl.setFont(UITheme.FONT_BOLD);
         titleLbl.setForeground(UITheme.TEXT_DARK);
 
-        JLabel catLbl = new JLabel("📁 " + (task.getCategoryName() != null ? task.getCategoryName() : "Tanpa Kategori"));
+        JLabel catLbl = new JLabel((task.getCategoryName() != null ? task.getCategoryName() : "Tanpa Kategori"));
         catLbl.setFont(UITheme.FONT_SMALL);
         catLbl.setForeground(UITheme.TEXT_MUTED);
 
