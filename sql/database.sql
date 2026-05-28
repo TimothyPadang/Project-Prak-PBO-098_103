@@ -1,6 +1,6 @@
-DROP DATABASE IF EXISTS task_management;
-CREATE DATABASE task_management;
-USE task_management;
+DROP DATABASE IF EXISTS databasepbo;
+CREATE DATABASE databasepbo;
+USE databasepbo;
 
 -- Tabel Users
 CREATE TABLE users (
@@ -48,7 +48,6 @@ CREATE TABLE task_notes (
     FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
 );
 
--- Data default: semua akun adalah user biasa
 INSERT INTO users (username, password, full_name, email) VALUES
 ('user1', 'user123', 'Budi Santoso', 'budi@example.com'),
 ('user2', 'user123', 'Siti Rahayu', 'siti@example.com');
@@ -59,10 +58,10 @@ INSERT INTO categories (name, description) VALUES
 ('Pribadi', 'Tugas pribadi'),
 ('Kerja', 'Tugas pekerjaan');
 
--- Tugas contoh otomatis diberikan ke user pembuatnya
+
 INSERT INTO tasks (title, description, category_id, assigned_to, created_by, priority, status, deadline) VALUES
-('Laporan Praktikum PBO', 'Membuat laporan lengkap praktikum PBO pertemuan 8', 1, 1, 1, 'High', 'In Progress', DATE_ADD(NOW(), INTERVAL 3 DAY)),
-('Tugas Basis Data', 'Normalisasi database hingga 3NF', 1, 1, 1, 'Medium', 'Pending', DATE_ADD(NOW(), INTERVAL 5 DAY)),
-('Rapat HIMA', 'Persiapan materi rapat bulanan HIMA', 2, 2, 2, 'Low', 'Pending', DATE_ADD(NOW(), INTERVAL 2 DAY)),
-('Proyek Akhir Semester', 'Implementasi sistem manajemen tugas berbasis Java', 1, 1, 1, 'Critical', 'In Progress', DATE_ADD(NOW(), INTERVAL 14 DAY)),
-('Tugas Overdue Example', 'Contoh tugas yang sudah lewat deadline', 1, 1, 1, 'High', 'Overdue', DATE_SUB(NOW(), INTERVAL 2 DAY));
+('Laporan Praktikum PBO', 'Membuat laporan lengkap praktikum PBO pertemuan 8', 1, 1, 1, 'Susah', 'Proses', DATE_ADD(NOW(), INTERVAL 3 DAY)),
+('Tugas Basis Data', 'Normalisasi database hingga 3NF', 1, 1, 1, 'Sedang', 'Blm mulai', DATE_ADD(NOW(), INTERVAL 5 DAY)),
+('Rapat HIMA', 'Persiapan materi rapat bulanan HIMA', 2, 2, 2, 'EZ', 'Blm mulai', DATE_ADD(NOW(), INTERVAL 2 DAY)),
+('Proyek Akhir Semester', 'Implementasi sistem manajemen tugas berbasis Java', 1, 1, 1, 'Susah+++', 'Proses', DATE_ADD(NOW(), INTERVAL 14 DAY)),
+('Tugas Overdue Example', 'Contoh tugas yang sudah lewat deadline', 1, 1, 1, 'Susah', 'Overdue', DATE_SUB(NOW(), INTERVAL 2 DAY));
