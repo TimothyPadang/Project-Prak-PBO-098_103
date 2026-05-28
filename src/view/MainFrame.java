@@ -78,7 +78,7 @@ public class MainFrame extends JFrame implements DeadlineMonitorThread.DeadlineL
         header.setMaximumSize(new Dimension(200, 70));
         header.setPreferredSize(new Dimension(200, 70));
         header.setBorder(BorderFactory.createEmptyBorder(10, 15, 10, 15));
-        JLabel appName = new JLabel("📋 Manajemen Tugas");
+        JLabel appName = new JLabel("Manajemen Tugas");
         appName.setFont(new Font("Segoe UI", Font.BOLD, 14));
         appName.setForeground(Color.WHITE);
         header.add(appName, BorderLayout.CENTER);
@@ -187,7 +187,7 @@ public class MainFrame extends JFrame implements DeadlineMonitorThread.DeadlineL
     @Override
     public void onOverdueDetected(List<Task> overdueTasks) {
         notifCount = overdueTasks.size();
-        lblNotifBadge.setText(notifCount > 0 ? notifCount + " task terlambat!" : "Tidak ada notifikasi");
+        lblNotifBadge.setText(notifCount > 0 ? notifCount + " tugas terlambat!" : "Tidak ada notifikasi");
         lblNotifBadge.setForeground(notifCount > 0 ? UITheme.DANGER : UITheme.TEXT_MUTED);
     }
 
