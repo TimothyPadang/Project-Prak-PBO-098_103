@@ -40,7 +40,7 @@ public class DashboardPanel extends JPanel {
         titlePanel.add(subtitle);
         header.add(titlePanel, BorderLayout.CENTER);
 
-        JButton btnRefresh = new JButton("🔄 Refresh");
+        JButton btnRefresh = new JButton("Refresh");
         btnRefresh.setFont(UITheme.FONT_SMALL);
         btnRefresh.setBackground(UITheme.SECONDARY);
         btnRefresh.setForeground(Color.WHITE);
@@ -59,8 +59,8 @@ public class DashboardPanel extends JPanel {
         lblCompleted  = new JLabel("0");
         lblOverdue    = new JLabel("0");
 
-        statsPanel.add(createStatCard("Pending",     lblPending,    UITheme.WARNING,   "📌"));
-        statsPanel.add(createStatCard("In Progress", lblInProgress, UITheme.SECONDARY, "⚡"));
+        statsPanel.add(createStatCard("Blm mulai",     lblPending,    UITheme.WARNING,   "📌"));
+        statsPanel.add(createStatCard("proses", lblInProgress, UITheme.SECONDARY, "⚡"));
         statsPanel.add(createStatCard("Selesai",     lblCompleted,  UITheme.SUCCESS,   "✅"));
         statsPanel.add(createStatCard("Terlambat",   lblOverdue,    UITheme.DANGER,    "🔴"));
 
@@ -145,9 +145,9 @@ public class DashboardPanel extends JPanel {
 
     public void refresh() {
         // Update statistik
-        lblPending.setText(String.valueOf(controller.countTasksByStatus("Pending")));
-        lblInProgress.setText(String.valueOf(controller.countTasksByStatus("In Progress")));
-        lblCompleted.setText(String.valueOf(controller.countTasksByStatus("Completed")));
+        lblPending.setText(String.valueOf(controller.countTasksByStatus("Blm mulai")));
+        lblInProgress.setText(String.valueOf(controller.countTasksByStatus("proses")));
+        lblCompleted.setText(String.valueOf(controller.countTasksByStatus("Selesai")));
         lblOverdue.setText(String.valueOf(controller.countTasksByStatus("Overdue")));
 
         // Update upcoming deadlines
