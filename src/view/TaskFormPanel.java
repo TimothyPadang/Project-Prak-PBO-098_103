@@ -38,7 +38,7 @@ public class TaskFormPanel extends JPanel {
         // Header
         JPanel header = new JPanel(new BorderLayout());
         header.setOpaque(false);
-        lblFormTitle = new JLabel("➕ Tambah Tugas Baru");
+        lblFormTitle = new JLabel("Tambah Tugas Baru");
         lblFormTitle.setFont(UITheme.FONT_TITLE);
         lblFormTitle.setForeground(UITheme.TEXT_DARK);
         header.add(lblFormTitle, BorderLayout.WEST);
@@ -112,7 +112,7 @@ public class TaskFormPanel extends JPanel {
         notesPanel = new JPanel(new BorderLayout(5, 5));
         notesPanel.setOpaque(false);
         notesPanel.setVisible(false);
-        JLabel notesTitle = new JLabel("💬 Tambah Catatan");
+        JLabel notesTitle = new JLabel("Tambah Catatan");
         notesTitle.setFont(UITheme.FONT_BOLD);
         txtNewNote = new JTextArea(2, 0);
         txtNewNote.setFont(UITheme.FONT_BODY);
@@ -131,7 +131,7 @@ public class TaskFormPanel extends JPanel {
         formContainer.add(notesPanel, gbc);
 
         // --- Tombol Simpan ---
-        btnSave = new JButton("💾 Simpan Tugas");
+        btnSave = new JButton("Simpan Tugas");
         btnSave.setFont(UITheme.FONT_BOLD);
         btnSave.setBackground(UITheme.SUCCESS);
         btnSave.setForeground(Color.WHITE);
@@ -196,8 +196,8 @@ public class TaskFormPanel extends JPanel {
 
     public void resetForm() {
         editingTask = null;
-        lblFormTitle.setText("➕ Tambah Tugas Baru");
-        btnSave.setText("💾 Simpan Tugas");
+        lblFormTitle.setText("Tambah Tugas Baru");
+        btnSave.setText("Simpan Tugas");
         txtTitle.setText("");
         txtDescription.setText("");
         cmbPriority.setSelectedIndex(1);
@@ -210,8 +210,8 @@ public class TaskFormPanel extends JPanel {
     public void loadTask(Task task) {
         if (task == null) { resetForm(); return; }
         editingTask = task;
-        lblFormTitle.setText("✏️ Edit Tugas: " + task.getTitle());
-        btnSave.setText("💾 Update Tugas");
+        lblFormTitle.setText("Edit Tugas: " + task.getTitle());
+        btnSave.setText("Update Tugas");
         txtTitle.setText(task.getTitle());
         txtDescription.setText(task.getDescription());
         cmbPriority.setSelectedItem(task.getPriority());
@@ -273,12 +273,12 @@ public class TaskFormPanel extends JPanel {
 
         if (success) {
             JOptionPane.showMessageDialog(this,
-                editingTask != null ? "✅ Tugas berhasil diupdate!" : "✅ Tugas berhasil ditambahkan!",
+                editingTask != null ? "Tugas berhasil diupdate!" : "Tugas berhasil ditambahkan!",
                 "Sukses", JOptionPane.INFORMATION_MESSAGE);
             resetForm();
             mainFrame.showPanel("TASKS");
         } else {
-            JOptionPane.showMessageDialog(this, "❌ Gagal menyimpan tugas!", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Gagal menyimpan tugas!", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 
