@@ -52,7 +52,7 @@ public class TaskListPanel extends JPanel {
         JPanel toolbar = new JPanel(new FlowLayout(FlowLayout.LEFT, 10, 5));
         toolbar.setOpaque(false);
 
-        cmbFilter = new JComboBox<>(new String[]{"Semua Status", "Pending", "In Progress", "Completed", "Overdue"});
+        cmbFilter = new JComboBox<>(new String[]{"Semua Status", "Blm mulai", "Proses", "Selesai", "Overdue"});
         cmbFilter.setFont(UITheme.FONT_BODY);
         cmbFilter.addActionListener(e -> doFilter());
 
@@ -134,8 +134,8 @@ public class TaskListPanel extends JPanel {
 
                 if (!sel) {
                     if ("Overdue".equals(status)) c.setBackground(UITheme.OVERDUE_BG);
-                    else if ("Completed".equals(status)) c.setBackground(new Color(240, 255, 240));
-                    else if ("In Progress".equals(status)) c.setBackground(new Color(240, 248, 255));
+                    else if ("Selesai".equals(status)) c.setBackground(new Color(240, 255, 240));
+                    else if ("proses".equals(status)) c.setBackground(new Color(240, 248, 255));
                     else c.setBackground(UITheme.WHITE);
                 }
 
@@ -230,7 +230,7 @@ public class TaskListPanel extends JPanel {
     private void doMarkDone() {
         int id = getSelectedTaskId();
         if (id < 0) return;
-        if (controller.updateTaskStatus(id, "Completed")) {
+        if (controller.updateTaskStatus(id, "Selesai")) {
             JOptionPane.showMessageDialog(this, "Tugas ditandai selesai!");
             refresh();
         }
